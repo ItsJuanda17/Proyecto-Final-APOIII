@@ -1,0 +1,22 @@
+video,parquet,frames,miss_frames,fps,width,height,stride,model_complexity,min_det,min_trk
+Walk_back.mp4,Walk_back.parquet,138,6,29.67151785324068,360,640,1,1,0.5,0.5
+sit_front (1).mp4,sit_front (1).parquet,97,0,30.0,480,864,1,1,0.5,0.5
+sit_front (2).mp4,sit_front (2).parquet,79,0,30.0,720,1280,1,1,0.5,0.5
+sit_front.mp4,sit_front.parquet,94,0,30.18281959609624,360,640,1,1,0.5,0.5
+sit_side (1).mp4,sit_side (1).parquet,121,0,29.56442347487791,360,640,1,1,0.5,0.5
+sit_side (2).mp4,sit_side (2).parquet,65,0,30.0,720,1280,1,1,0.5,0.5
+sit_side.mp4,sit_side.parquet,84,0,30.0,480,864,1,1,0.5,0.5
+stand_front (1).mp4,stand_front (1).parquet,73,0,30.0,480,864,1,1,0.5,0.5
+stand_front (2).mp4,stand_front (2).parquet,207,0,29.935055075771498,360,640,1,1,0.5,0.5
+stand_front.mp4,stand_front.parquet,61,0,30.0,720,1280,1,1,0.5,0.5
+stand_side (1).mp4,stand_side (1).parquet,72,0,30.0,480,864,1,1,0.5,0.5
+stand_side.mp4,stand_side.parquet,134,0,29.58533976588504,360,640,1,1,0.5,0.5
+stand_site.mp4,stand_site.parquet,59,0,30.0,720,1280,1,1,0.5,0.5
+walk_back (1).mp4,walk_back (1).parquet,110,0,30.0,480,864,1,1,0.5,0.5
+walk_back.mp4,walk_back.parquet,94,0,30.0,720,1280,1,1,0.5,0.5
+walking_away (1).mp4,walking_away (1).parquet,96,0,30.0,480,864,1,1,0.5,0.5
+walking_away (2).mp4,walking_away (2).parquet,169,0,29.886702108723256,478,850,1,1,0.5,0.5
+walking_away.mp4,walking_away.parquet,121,9,30.0,720,1280,1,1,0.5,0.5
+walking_to_camera (1).mp4,walking_to_camera (1).parquet,95,0,30.0,480,864,1,1,0.5,0.5
+walking_to_camera (2).mp4,walking_to_camera (2).parquet,153,0,29.869585678150553,478,850,1,1,0.5,0.5
+walking_to_camera.mp4,walking_to_camera.parquet,98,0,30.0,720,1280,1,1,0.5,0.5
