@@ -1,0 +1,24 @@
+# Dependencias del proyecto - Sistema de Análisis de Actividades Humanas
+# Proyecto Final APO3 - Universidad ICESI
+
+# Procesamiento de video y visión por computadora
+opencv-python>=4.8.0
+mediapipe>=0.10.0
+
+# Análisis de datos
+numpy>=1.26.0,<2.0.0
+pandas>=2.0.0
+pyarrow>=12.0.0
+
+# Machine Learning
+scikit-learn>=1.4.0
+xgboost>=1.7.0
+joblib>=1.3.0
+
+# Visualización
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Utilidades
+tqdm>=4.65.0
+
