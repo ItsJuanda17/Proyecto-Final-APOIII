@@ -21,7 +21,9 @@ from sklearn.metrics import (
 from sklearn.base import clone
 from xgboost import XGBClassifier
 
+
 from src.config import CLASS_MAPPING, FINAL_CLASSES, MODEL_CONFIG
+
 
 # Suprimir warnings de XGBoost sobre parámetros deprecados
 warnings.filterwarnings('ignore', category=UserWarning, module='xgboost')
@@ -30,11 +32,11 @@ warnings.filterwarnings('ignore', category=UserWarning, module='xgboost')
 def consolidate_classes(df: pd.DataFrame, class_col: str = 'action') -> pd.DataFrame:
     """
     Consolida clases similares para mejorar la precisión.
-    
+
     Args:
         df: DataFrame con columna de clases
         class_col: Nombre de la columna con las clases
-        
+
     Returns:
         DataFrame con clases consolidadas
     """
@@ -51,36 +53,32 @@ def prepare_data(
 ) -> Tuple[pd.DataFrame, np.ndarray, np.ndarray, LabelEncoder, list]:
     """
     Prepara datos para entrenamiento.
-    
+
     Returns:
         X, y, groups, label_encoder, class_names
     """
     df = pd.read_csv(features_path)
-    
+
     if consolidate:
         df = consolidate_classes(df, class_col)
-    
-    # Filtrar solo clases finales válidas
+
     df = df[df[class_col].isin(FINAL_CLASSES)]
-    
-    # Grupos y etiquetas
+
     groups = df[subject_col].astype(str).values
     y_str = df[class_col].astype(str).values
-    
-    # Features numéricas
-    drop_cols = [c for c in [subject_col, class_col, 'source', 'frame_start', 'frame_end'] 
+
+    drop_cols = [c for c in [subject_col, class_col, 'source', 'frame_start', 'frame_end']
                  if c in df.columns]
     X = df.drop(columns=drop_cols).select_dtypes(include=[np.number]).copy()
-    
-    # Codificar etiquetas
+
     le = LabelEncoder()
     y = le.fit_transform(y_str)
     class_names = list(le.classes_)
-    
+
     print(f"Dataset: {X.shape[0]} muestras, {X.shape[1]} características")
     print(f"Clases: {class_names}")
     print(f"Sujetos: {len(np.unique(groups))}")
-    
+
     return X, y, groups, le, class_names
 
 
@@ -89,9 +87,9 @@ def get_models() -> Dict:
     return {
         "SVM_RBF": Pipeline([
             ("scaler", StandardScaler()),
-            ("clf", SVC(kernel="rbf", probability=True, 
-                       class_weight="balanced", 
-                       random_state=MODEL_CONFIG["random_state"]))
+            ("clf", SVC(kernel="rbf", probability=True,
+                        class_weight="balanced",
+                        random_state=MODEL_CONFIG["random_state"]))
         ]),
         "RandomForest": RandomForestClassifier(
             n_jobs=-1,
@@ -151,7 +149,7 @@ def train_models(
 ) -> pd.DataFrame:
     """
     Entrena modelos con validación Leave-One-Subject-Out.
-    
+
     Returns:
         DataFrame con resultados de todos los modelos
     """
@@ -161,13 +159,13 @@ def train_models(
         param_grids = get_param_grids()
     if scorers is None:
         scorers = get_scorers()
-    
+
     logo = LeaveOneGroupOut()
     results = []
-    
+
     for name, estimator in models.items():
         print(f"\n=== Entrenando {name} ===")
-        
+
         grid = GridSearchCV(
             estimator=estimator,
             param_grid=param_grids[name],
@@ -177,9 +175,9 @@ def train_models(
             n_jobs=-1,
             verbose=1
         )
-        
+
         grid.fit(X, y)
-        
+
         best_idx = grid.best_index_
         result = {
             "model": name,
@@ -193,17 +191,17 @@ def train_models(
             "best_kappa": grid.cv_results_["mean_test_kappa"][best_idx],
             "best_estimator": grid.best_estimator_,
         }
-        
+
         print(f"Mejor F1 macro: {result['best_f1_macro']:.4f}")
         print(f"Mejores parámetros: {result['best_params']}")
-        
+
         results.append(result)
-    
+
     results_df = pd.DataFrame([
         {k: v for k, v in r.items() if k != "best_estimator"}
         for r in results
     ]).sort_values("best_f1_macro", ascending=False)
-    
+
     return results_df, results
 
 
@@ -217,7 +215,7 @@ def evaluate_loso(
 ) -> Tuple[np.ndarray, Dict]:
     """
     Evalúa el mejor modelo con Leave-One-Subject-Out.
-    
+
     Returns:
         Matriz de confusión y métricas
     """
@@ -225,30 +223,30 @@ def evaluate_loso(
     model_config = [r for r in results if r["model"] == best_model_name][0]
     best_params = model_config["best_params"]
     base_estimator = get_models()[best_model_name]
-    
+
     y_true_all, y_pred_all = [], []
-    
+
     for train_idx, test_idx in logo.split(X, y, groups=groups):
         estimator = clone(base_estimator)
-        
+
         # Aplicar mejores parámetros
         if best_model_name == "SVM_RBF":
             estimator.set_params(**{
-                f"clf__{k.split('__')[-1]}": v 
+                f"clf__{k.split('__')[-1]}": v
                 for k, v in best_params.items()
             })
         else:
             estimator.set_params(**best_params)
-        
+
         estimator.fit(X.iloc[train_idx], y[train_idx])
         preds = estimator.predict(X.iloc[test_idx])
-        
+
         y_true_all.extend(y[test_idx])
         y_pred_all.extend(preds)
-    
+
     y_true_all = np.array(y_true_all)
     y_pred_all = np.array(y_pred_all)
-    
+
     # Calcular métricas
     metrics = {
         "accuracy": accuracy_score(y_true_all, y_pred_all),
@@ -259,16 +257,21 @@ def evaluate_loso(
         "mcc": matthews_corrcoef(y_true_all, y_pred_all),
         "kappa": cohen_kappa_score(y_true_all, y_pred_all),
     }
-    
+
     print("\n=== Evaluación LOSO Final ===")
     for metric, value in metrics.items():
         print(f"{metric}: {value:.4f}")
-    
+
     print("\n--- Reporte por clase ---")
-    print(classification_report(y_true_all, y_pred_all, 
-                               target_names=class_names, digits=3, zero_division=0))
-    
-    cm = confusion_matrix(y_true_all, y_pred_all)
+    print(classification_report(
+        y_true_all,
+        y_pred_all,
+        labels=range(len(class_names)),
+        target_names=class_names,
+        digits=3,
+        zero_division=0))
+
+    cm = confusion_matrix(y_true_all, y_pred_all, labels=range(len(class_names)))
     return cm, metrics
 
 
@@ -285,4 +288,3 @@ def load_model(path: str) -> Tuple:
     """Carga el modelo y el label encoder."""
     data = joblib.load(path)
     return data['model'], data['label_encoder']
-

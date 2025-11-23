@@ -59,7 +59,6 @@ CLASS_MAPPING = {
     "walk_away": "walk_away",
     "stand_front": "stand_front",
     "stand_side": "stand_side",
-    "stand_site": "stand_site",  # typo in data kept for consistency
     "sit_front": "sit_front",
     "sit_side": "sit_side",
 }

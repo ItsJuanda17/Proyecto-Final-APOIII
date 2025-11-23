@@ -9,8 +9,8 @@ video,parquet,frames,fps,width,height,valid_frames,valid_ratio
 ..\Entrega 2\data\videos\stand_front(1).mp4,stand_front(1)__stand_front(1).parquet,207,29.935055075771498,360,640,207,1.0
 ..\Entrega 2\data\videos\stand_front.mp4,stand_front__stand_front.parquet,61,30.0,1280,720,61,1.0
 ..\Entrega 2\data\videos\stand_side(1).mp4,stand_side(1)__stand_side(1).parquet,134,29.58533976588504,360,640,134,1.0
+..\Entrega 2\data\videos\stand_side(2).mp4,stand_side(2)__stand_side(2).parquet,59,30.0,1280,720,59,1.0
 ..\Entrega 2\data\videos\stand_side.mp4,stand_side__stand_side.parquet,72,30.0,480,864,72,1.0
-..\Entrega 2\data\videos\stand_site.mp4,stand_site__stand_site.parquet,59,30.0,1280,720,59,1.0
 ..\Entrega 2\data\videos\walking_away (1).mp4,walking_away (1)__walking_away (1).parquet,96,30.0,480,864,96,1.0
 ..\Entrega 2\data\videos\walking_away(1).mp4,walking_away(1)__walking_away(1).parquet,169,29.886702108723256,478,850,169,1.0
 ..\Entrega 2\data\videos\walking_away.mp4,walking_away__walking_away.parquet,111,30.0,1280,720,111,1.0

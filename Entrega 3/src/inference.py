@@ -23,7 +23,7 @@ class RealTimeActivityDetector:
         self,
         model_path: str,
         window_size: int = None,
-        confidence_threshold: float = 0.3
+        confidence_threshold: float = 0.35
     ):
         """
         Args:
