@@ -1,43 +1,22 @@
-video,parquet,frames,miss_frames,fps,width,height,stride,model_complexity,min_det,min_trk,subject,action,video_relpath
-sit_front.mp4,subject1__sit_front__sit_front.parquet,94,0,30.18281959609624,360,640,1,1,0.5,0.5,subject1,sit_front,subject1/sit_front.mp4
-sit_side.mp4,subject1__sit_side__sit_side.parquet,121,0,29.56442347487791,360,640,1,1,0.5,0.5,subject1,sit_side,subject1/sit_side.mp4
-stand_front.mp4,subject1__stand_front__stand_front.parquet,207,0,29.935055075771498,360,640,1,1,0.5,0.5,subject1,stand_front,subject1/stand_front.mp4
-stand_side.mp4,subject1__stand_side__stand_side.parquet,134,0,29.58533976588504,360,640,1,1,0.5,0.5,subject1,stand_side,subject1/stand_side.mp4
-walk_back.mp4,subject1__walk_back__walk_back.parquet,138,6,29.67151785324068,360,640,1,1,0.5,0.5,subject1,walk_back,subject1/walk_back.mp4
-walking_away.mp4,subject1__walking_away__walking_away.parquet,169,0,29.886702108723256,478,850,1,1,0.5,0.5,subject1,walking_away,subject1/walking_away.mp4
-walking_to_camera.mp4,subject1__walking_to_camera__walking_to_camera.parquet,153,0,29.869585678150553,478,850,1,1,0.5,0.5,subject1,walking_to_camera,subject1/walking_to_camera.mp4
-sit_front.mp4,subject2__sit_front__sit_front.parquet,97,0,30.0,480,864,1,1,0.5,0.5,subject2,sit_front,subject2/sit_front.mp4
-sit_side.mp4,subject2__sit_side__sit_side.parquet,84,0,30.0,480,864,1,1,0.5,0.5,subject2,sit_side,subject2/sit_side.mp4
-stand_front.mp4,subject2__stand_front__stand_front.parquet,73,0,30.0,480,864,1,1,0.5,0.5,subject2,stand_front,subject2/stand_front.mp4
-stand_side.mp4,subject2__stand_side__stand_side.parquet,72,0,30.0,480,864,1,1,0.5,0.5,subject2,stand_side,subject2/stand_side.mp4
-walk_back.mp4,subject2__walk_back__walk_back.parquet,110,0,30.0,480,864,1,1,0.5,0.5,subject2,walk_back,subject2/walk_back.mp4
-walking_away.mp4,subject2__walking_away__walking_away.parquet,96,0,30.0,480,864,1,1,0.5,0.5,subject2,walking_away,subject2/walking_away.mp4
-walking_to_camera.mp4,subject2__walking_to_camera__walking_to_camera.parquet,95,0,30.0,480,864,1,1,0.5,0.5,subject2,walking_to_camera,subject2/walking_to_camera.mp4
-sit_front.mp4,subject3__sit_front__sit_front.parquet,79,0,30.0,720,1280,1,1,0.5,0.5,subject3,sit_front,subject3/sit_front.mp4
-sit_side.mp4,subject3__sit_side__sit_side.parquet,65,0,30.0,720,1280,1,1,0.5,0.5,subject3,sit_side,subject3/sit_side.mp4
-stand_front.mp4,subject3__stand_front__stand_front.parquet,61,0,30.0,720,1280,1,1,0.5,0.5,subject3,stand_front,subject3/stand_front.mp4
-stand_site.mp4,subject3__stand_site__stand_site.parquet,59,0,30.0,720,1280,1,1,0.5,0.5,subject3,stand_site,subject3/stand_site.mp4
-walk_back.mp4,subject3__walk_back__walk_back.parquet,94,0,30.0,720,1280,1,1,0.5,0.5,subject3,walk_back,subject3/walk_back.mp4
-walking_away.mp4,subject3__walking_away__walking_away.parquet,121,9,30.0,720,1280,1,1,0.5,0.5,subject3,walking_away,subject3/walking_away.mp4
-walking_to_camera.mp4,subject3__walking_to_camera__walking_to_camera.parquet,98,0,30.0,720,1280,1,1,0.5,0.5,subject3,walking_to_camera,subject3/walking_to_camera.mp4
-sit_front.mp4,subject4__sit_front__sit_front.parquet,116,0,30.143354764916904,480,848,1,1,0.5,0.5,subject4,sit_front,subject4/sit_front.mp4
-sit_side.mp4,subject4__sit_side__sit_side.parquet,124,0,30.216879213711316,480,848,1,1,0.5,0.5,subject4,sit_side,subject4/sit_side.mp4
-stand_front.mp4,subject4__stand_front__stand_front.parquet,111,0,30.124696832579186,480,848,1,1,0.5,0.5,subject4,stand_front,subject4/stand_front.mp4
-stand_side.mp4,subject4__stand_side__stand_side.parquet,146,0,30.159058045858295,480,848,1,1,0.5,0.5,subject4,stand_side,subject4/stand_side.mp4
-walk_side.mp4,subject4__walk_side__walk_side.parquet,376,0,29.978079728935448,480,848,1,1,0.5,0.5,subject4,walk_side,subject4/walk_side.mp4
-walking_away.mp4,subject4__walking_away__walking_away.parquet,145,0,30.05553673995535,480,848,1,1,0.5,0.5,subject4,walking_away,subject4/walking_away.mp4
-walking_to_camera.mp4,subject4__walking_to_camera__walking_to_camera.parquet,152,0,29.989394597297334,480,848,1,1,0.5,0.5,subject4,walking_to_camera,subject4/walking_to_camera.mp4
-sit_front.mp4,subject5__sit_front__sit_front.parquet,92,0,30.279758639605046,1080,1920,1,1,0.5,0.5,subject5,sit_front,subject5/sit_front.mp4
-sit_side.mp4,subject5__sit_side__sit_side.parquet,116,0,30.218893889110905,480,848,1,1,0.5,0.5,subject5,sit_side,subject5/sit_side.mp4
-stand_front.mp4,subject5__stand_front__stand_front.parquet,120,0,30.178556459049375,1080,1920,1,1,0.5,0.5,subject5,stand_front,subject5/stand_front.mp4
-stand_side.mp4,subject5__stand_side__stand_side.parquet,113,0,29.992635538836026,480,848,1,1,0.5,0.5,subject5,stand_side,subject5/stand_side.mp4
-walk_side.mp4,subject5__walk_side__walk_side.parquet,465,0,29.986773852228445,480,848,1,1,0.5,0.5,subject5,walk_side,subject5/walk_side.mp4
-walking_away.mp4,subject5__walking_away__walking_away.parquet,163,0,30.02578902124524,1080,1920,1,1,0.5,0.5,subject5,walking_away,subject5/walking_away.mp4
-walking_to_camera.mp4,subject5__walking_to_camera__walking_to_camera.parquet,129,0,30.0,1080,1920,1,1,0.5,0.5,subject5,walking_to_camera,subject5/walking_to_camera.mp4
-sit_side.mp4,subject6__sit_side__sit_side.parquet,119,0,30.13814506118106,480,848,1,1,0.5,0.5,subject6,sit_side,subject6/sit_side.mp4
-stand_side.mp4,subject6__stand_side__stand_side.parquet,115,0,30.06157936023708,480,848,1,1,0.5,0.5,subject6,stand_side,subject6/stand_side.mp4
-walk_side.mp4,subject6__walk_side__walk_side.parquet,221,0,29.984,480,848,1,1,0.5,0.5,subject6,walk_side,subject6/walk_side.mp4
-sit_front.mp4,subject7__sit_front__sit_front.parquet,60,0,30.218550734391037,480,848,1,1,0.5,0.5,subject7,sit_front,subject7/sit_front.mp4
-stand_front.mp4,subject7__stand_front__stand_front.parquet,80,0,29.95896717373899,480,848,1,1,0.5,0.5,subject7,stand_front,subject7/stand_front.mp4
-walk_away.mp4,subject7__walk_away__walk_away.parquet,117,0,30.075351640991293,480,848,1,1,0.5,0.5,subject7,walk_away,subject7/walk_away.mp4
-walk_front.mp4,subject7__walk_front__walk_front.parquet,113,0,29.946660646623464,480,848,1,1,0.5,0.5,subject7,walk_front,subject7/walk_front.mp4
+video,parquet,frames,fps,width,height,valid_frames,valid_ratio
+..\Entrega 2\data\videos\sit_front(1).mp4,sit_front(1)__sit_front(1).parquet,79,30.0,1280,720,79,1.0
+..\Entrega 2\data\videos\sit_front(2).mp4,sit_front(2)__sit_front(2).parquet,94,30.18281959609624,360,640,94,1.0
+..\Entrega 2\data\videos\sit_front.mp4,sit_front__sit_front.parquet,97,30.0,480,864,97,1.0
+..\Entrega 2\data\videos\sit_side(1).mp4,sit_side(1)__sit_side(1).parquet,65,30.0,1280,720,65,1.0
+..\Entrega 2\data\videos\sit_side(2).mp4,sit_side(2)__sit_side(2).parquet,121,29.56442347487791,360,640,121,1.0
+..\Entrega 2\data\videos\sit_side.mp4,sit_side__sit_side.parquet,84,30.0,480,864,84,1.0
+..\Entrega 2\data\videos\stand_front (1).mp4,stand_front (1)__stand_front (1).parquet,73,30.0,480,864,73,1.0
+..\Entrega 2\data\videos\stand_front(1).mp4,stand_front(1)__stand_front(1).parquet,207,29.935055075771498,360,640,207,1.0
+..\Entrega 2\data\videos\stand_front.mp4,stand_front__stand_front.parquet,61,30.0,1280,720,61,1.0
+..\Entrega 2\data\videos\stand_side(1).mp4,stand_side(1)__stand_side(1).parquet,134,29.58533976588504,360,640,134,1.0
+..\Entrega 2\data\videos\stand_side.mp4,stand_side__stand_side.parquet,72,30.0,480,864,72,1.0
+..\Entrega 2\data\videos\stand_site.mp4,stand_site__stand_site.parquet,59,30.0,1280,720,59,1.0
+..\Entrega 2\data\videos\walking_away (1).mp4,walking_away (1)__walking_away (1).parquet,96,30.0,480,864,96,1.0
+..\Entrega 2\data\videos\walking_away(1).mp4,walking_away(1)__walking_away(1).parquet,169,29.886702108723256,478,850,169,1.0
+..\Entrega 2\data\videos\walking_away.mp4,walking_away__walking_away.parquet,111,30.0,1280,720,111,1.0
+..\Entrega 2\data\videos\walking_to_camera (1).mp4,walking_to_camera (1)__walking_to_camera (1).parquet,95,30.0,480,864,95,1.0
+..\Entrega 2\data\videos\walking_to_camera(1).mp4,walking_to_camera(1)__walking_to_camera(1).parquet,153,29.869585678150553,478,850,153,1.0
+..\Entrega 2\data\videos\walking_to_camera.mp4,walking_to_camera__walking_to_camera.parquet,98,30.0,1280,720,98,1.0
+..\Entrega 2\data\videos\walk_back (1).mp4,walk_back (1)__walk_back (1).parquet,110,30.0,480,864,110,1.0
+..\Entrega 2\data\videos\Walk_back(1).mp4,Walk_back(1)__Walk_back(1).parquet,132,29.67151785324068,360,640,132,1.0
+..\Entrega 2\data\videos\walk_back.mp4,walk_back__walk_back.parquet,94,30.0,1280,720,94,1.0

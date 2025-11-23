@@ -1,6 +1,7 @@
 """
 Configuración global del proyecto
 """
+
 import os
 from pathlib import Path
 
@@ -48,24 +49,20 @@ MODEL_CONFIG = {
     "cv_folds": 5
 }
 
-# Clases consolidadas (para mejorar precisión)
+# Original detailed classes (no consolidation)
 CLASS_MAPPING = {
-    # Consolidar variantes de caminar
-    "walk_back": "walk",
-    "walk_front": "walk",
-    "walk_side": "walk",
-    "walking_away": "walk",
-    "walking_to_camera": "walk",
-    "walk_away": "walk",
-    # Consolidar variantes de estar de pie
-    "stand_front": "stand",
-    "stand_side": "stand",
-    "stand_site": "stand",  # typo en los datos
-    # Mantener sentarse separado por perspectiva
+    "walk_back": "walk_back",
+    "walk_front": "walk_front",
+    "walk_side": "walk_side",
+    "walking_away": "walking_away",
+    "walking_to_camera": "walking_to_camera",
+    "walk_away": "walk_away",
+    "stand_front": "stand_front",
+    "stand_side": "stand_side",
+    "stand_site": "stand_site",  # typo in data kept for consistency
     "sit_front": "sit_front",
     "sit_side": "sit_side",
 }
 
-# Clases finales después de consolidación
-FINAL_CLASSES = ["sit_front", "sit_side", "stand", "walk"]
-
+# Final classes after no consolidation (same as the original keys)
+FINAL_CLASSES = list(CLASS_MAPPING.keys())
