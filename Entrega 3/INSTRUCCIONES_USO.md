@@ -43,7 +43,7 @@ Si necesitas procesar videos nuevos:
 
 ```bash
 cd "Entrega 3"
-python process_videos.py --input ruta/videos --output ../Entrega 2/data/poses
+python process_videos.py --input "../Entrega 2/data/videos"  --output "../Entrega 2/data/poses"
 ```
 
 ### Paso 3: Entrenar el Modelo
