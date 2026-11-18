@@ -1,0 +1,13 @@
+# Dependencias fijadas para el despliegue web (compatibles entre sí).
+# - mediapipe 0.10.21: las versiones nuevas ya no incluyen mp.solutions.pose.
+# - scikit-learn 1.7.2: versión con la que se guardó models/best_model.pkl.
+# - numpy<2 y pyarrow<21: mediapipe exige numpy 1.x y pyarrow reciente exige numpy 2.
+mediapipe==0.10.21
+numpy>=1.26,<2
+pandas>=2.0
+pyarrow<21
+scikit-learn==1.7.2
+joblib>=1.3
+fastapi
+uvicorn[standard]
+python-multipart

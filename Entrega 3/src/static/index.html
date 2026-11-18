@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Análisis de Actividades Humanas</title>
+<style>
+  :root { --bg:#0f1420; --card:#171e2e; --ink:#e8ecf4; --mute:#8b95ab; --acc:#4f8cff; --ok:#2fc08a; --line:#252f45; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.5 system-ui,sans-serif; }
+  main { max-width:960px; margin:0 auto; padding:24px 16px 48px; }
+  h1 { font-size:22px; margin:0 0 4px; } .sub { color:var(--mute); margin:0 0 20px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px; margin-bottom:16px; }
+  h2 { font-size:15px; margin:0 0 12px; color:var(--mute); font-weight:600; text-transform:uppercase; letter-spacing:.04em; }
+  .chips { display:flex; flex-wrap:wrap; gap:8px; }
+  button, .file { background:var(--acc); color:#fff; border:0; border-radius:8px; padding:8px 14px; font:inherit; cursor:pointer; }
+  button.ghost { background:transparent; border:1px solid var(--line); color:var(--ink); }
+  button:disabled { opacity:.5; cursor:wait; }
+  input[type=file] { display:none; }
+  video { width:100%; max-height:420px; background:#000; border-radius:8px; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; } @media (max-width:720px){ .grid{grid-template-columns:1fr;} }
+  .big { font-size:28px; font-weight:700; color:var(--ok); }
+  .row { display:flex; align-items:center; gap:10px; margin:6px 0; }
+  .row .lbl { width:210px; color:var(--mute); font-size:13px; } .track { flex:1; height:10px; background:var(--line); border-radius:6px; overflow:hidden; }
+  .fill { height:100%; background:var(--acc); } .val { width:56px; text-align:right; font-variant-numeric:tabular-nums; }
+  .tl { display:flex; height:26px; border-radius:6px; overflow:hidden; background:var(--line); }
+  .tl div { height:100%; } .legend { display:flex; flex-wrap:wrap; gap:12px; margin-top:10px; font-size:13px; color:var(--mute); }
+  .dot { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:6px; }
+  .previews { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:8px; } .previews img { width:100%; border-radius:8px; }
+  .err { color:#ff7b7b; } .mute { color:var(--mute); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Análisis de Actividades Humanas</h1>
+  <p class="sub">MediaPipe Pose + Random Forest · Proyecto Final APO3 · Universidad ICESI</p>
+
+  <div class="card">
+    <h2>1. Elige un video</h2>
+    <div class="chips" id="samples"></div>
+    <p class="mute" style="margin:12px 0 8px">o sube uno propio (máx. 30 MB, se analizan los primeros ~15 s; la persona debe verse completa):</p>
+    <label class="file">Subir video<input type="file" id="upload" accept="video/*"></label>
+  </div>
+
+  <div class="card" id="viewer" hidden>
+    <h2>Video</h2>
+    <video id="player" controls muted playsinline></video>
+    <p id="status" class="mute"></p>
+  </div>
+
+  <div id="results" hidden>
+    <div class="grid">
+      <div class="card"><h2>Actividad dominante</h2><div class="big" id="dominant"></div><p class="mute" id="meta"></p></div>
+      <div class="card"><h2>Distribución</h2><div id="bars"></div></div>
+    </div>
+    <div class="card"><h2>Línea de tiempo</h2><div class="tl" id="timeline"></div><div class="legend" id="legend"></div></div>
+    <div class="card"><h2>Frames con esqueleto detectado</h2><div class="previews" id="previews"></div></div>
+  </div>
+</main>
+
+<script>
+const $ = (s) => document.querySelector(s);
+const palette = ["#4f8cff","#2fc08a","#f5a524","#e5484d","#a78bfa","#22d3ee","#f472b6","#94a3b8","#84cc16","#fb923c"];
+const colors = {};
+const color = (a) => colors[a] ??= palette[Object.keys(colors).length % palette.length];
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+function setBusy(busy, text = "") {
+  document.querySelectorAll("button").forEach((b) => b.disabled = busy);
+  $("#status").textContent = text; $("#status").className = "mute";
+}
+
+async function run(url, options, videoSrc) {
+  $("#viewer").hidden = false; $("#results").hidden = true;
+  $("#player").src = videoSrc;
+  setBusy(true, "Analizando con MediaPipe… puede tardar unos segundos.");
+  try {
+    const r = await fetch(url, options);
+    const data = await r.json();
+    if (!r.ok) throw new Error(data.detail || `Error ${r.status}`);
+    render(data); setBusy(false, `${data.frames_processed} frames procesados a ${data.fps} FPS.`);
+  } catch (e) {
+    setBusy(false, "⚠ " + e.message); $("#status").className = "err";
+  }
+}
+
+function render(d) {
+  $("#results").hidden = false;
+  $("#dominant").textContent = d.dominant_activity ?? "Sin detección";
+  $("#meta").textContent = d.note || `${d.frames_classified} de ${d.frames_processed} frames clasificados (ventana de 32 frames).`;
+  $("#bars").innerHTML = d.summary.map((s) => `
+    <div class="row"><span class="lbl" title="Confianza promedio del modelo">${esc(s.activity)} · conf. ${s.avg_confidence}%</span>
+      <div class="track"><div class="fill" style="width:${s.percent}%;background:${color(s.activity)}"></div></div>
+      <span class="val">${s.percent}%</span></div>`).join("");
+  const total = d.timeline.length || 1;
+  const runs = []; d.timeline.forEach((t) => { const l = runs[runs.length-1]; l && l.a === t.activity ? l.n++ : runs.push({a:t.activity, n:1}); });
+  $("#timeline").innerHTML = runs.map((r) => `<div title="${esc(r.a)}" style="width:${100*r.n/total}%;background:${color(r.a)}"></div>`).join("");
+  $("#legend").innerHTML = d.summary.map((s) => `<span><i class="dot" style="background:${color(s.activity)}"></i>${esc(s.activity)}</span>`).join("");
+  $("#previews").innerHTML = d.previews.map((p) => `<img alt="frame ${p.frame}" src="data:image/jpeg;base64,${p.image}">`).join("");
+}
+
+fetch("/api/samples").then((r) => r.json()).then(({samples}) => {
+  $("#samples").innerHTML = samples.map((n) => `<button class="ghost" data-n="${esc(n)}">${esc(n)}</button>`).join("");
+  document.querySelectorAll("#samples button").forEach((b) => b.addEventListener("click", () =>
+    run(`/api/samples/${b.dataset.n}/analyze`, {method:"POST"}, `/api/samples/${b.dataset.n}/video`)));
+});
+
+$("#upload").addEventListener("change", (e) => {
+  const f = e.target.files[0]; if (!f) return;
+  const fd = new FormData(); fd.append("file", f);
+  run("/api/analyze", {method:"POST", body:fd}, URL.createObjectURL(f));
+  e.target.value = "";
+});
+</script>
+</body>
+</html>

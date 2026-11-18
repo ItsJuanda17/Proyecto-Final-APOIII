@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: proyecto-final-apoiii
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: MAX_UPLOAD_MB
+        value: "30"
+      - key: MAX_FRAMES
+        value: "450"

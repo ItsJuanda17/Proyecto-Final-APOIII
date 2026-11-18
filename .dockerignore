@@ -1,0 +1,8 @@
+.git
+.idea
+.venv
+__pycache__
+*.py[cod]
+Entrega 1
+Entrega 2
+INFORME_FINAL.*
