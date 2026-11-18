@@ -5,82 +5,110 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Análisis de Actividades Humanas</title>
 <style>
-  :root { --bg:#0f1420; --card:#171e2e; --ink:#e8ecf4; --mute:#8b95ab; --acc:#4f8cff; --ok:#2fc08a; --line:#252f45; }
-  * { box-sizing: border-box; }
-  body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.5 system-ui,sans-serif; }
-  main { max-width:960px; margin:0 auto; padding:24px 16px 48px; }
-  h1 { font-size:22px; margin:0 0 4px; } .sub { color:var(--mute); margin:0 0 20px; }
-  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px; margin-bottom:16px; }
-  h2 { font-size:15px; margin:0 0 12px; color:var(--mute); font-weight:600; text-transform:uppercase; letter-spacing:.04em; }
+  :root { --bg:#fff; --ink:#111; --mute:#6b6b6b; --line:#d9d9d9; --soft:#f4f4f4; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#0e0e0e; --ink:#f2f2f2; --mute:#9a9a9a; --line:#2c2c2c; --soft:#181818; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.55 Georgia, "Times New Roman", serif; }
+  main { max-width:880px; margin:0 auto; padding:48px 20px 72px; }
+  header { border-bottom:2px solid var(--ink); padding-bottom:16px; margin-bottom:32px; }
+  h1 { font-size:30px; line-height:1.15; margin:0 0 6px; font-weight:700; letter-spacing:-.01em; }
+  .sub { margin:0; color:var(--mute); font-size:14px; }
+  h2 { font:600 12px/1 ui-monospace, Consolas, monospace; text-transform:uppercase; letter-spacing:.12em; margin:0 0 14px; color:var(--mute); }
+  section { margin-bottom:36px; }
+  .mono, button, .file, .val, .lbl { font-family:ui-monospace, Consolas, monospace; }
   .chips { display:flex; flex-wrap:wrap; gap:8px; }
-  button, .file { background:var(--acc); color:#fff; border:0; border-radius:8px; padding:8px 14px; font:inherit; cursor:pointer; }
-  button.ghost { background:transparent; border:1px solid var(--line); color:var(--ink); }
-  button:disabled { opacity:.5; cursor:wait; }
+  button, .file { background:var(--bg); color:var(--ink); border:1px solid var(--ink); padding:7px 12px; font-size:13px; cursor:pointer; border-radius:0; display:inline-block; }
+  button:hover, .file:hover { background:var(--ink); color:var(--bg); }
+  button:disabled { opacity:.4; cursor:wait; background:var(--bg); color:var(--ink); }
   input[type=file] { display:none; }
-  video { width:100%; max-height:420px; background:#000; border-radius:8px; }
-  .grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; } @media (max-width:720px){ .grid{grid-template-columns:1fr;} }
-  .big { font-size:28px; font-weight:700; color:var(--ok); }
-  .row { display:flex; align-items:center; gap:10px; margin:6px 0; }
-  .row .lbl { width:210px; color:var(--mute); font-size:13px; } .track { flex:1; height:10px; background:var(--line); border-radius:6px; overflow:hidden; }
-  .fill { height:100%; background:var(--acc); } .val { width:56px; text-align:right; font-variant-numeric:tabular-nums; }
-  .tl { display:flex; height:26px; border-radius:6px; overflow:hidden; background:var(--line); }
-  .tl div { height:100%; } .legend { display:flex; flex-wrap:wrap; gap:12px; margin-top:10px; font-size:13px; color:var(--mute); }
-  .dot { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:6px; }
-  .previews { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:8px; } .previews img { width:100%; border-radius:8px; }
-  .err { color:#ff7b7b; } .mute { color:var(--mute); }
+  .hint { color:var(--mute); font-size:14px; margin:16px 0 10px; }
+  video { width:100%; max-height:440px; background:#000; display:block; }
+  #status { color:var(--mute); font-size:14px; margin:8px 0 0; } #status.err { color:var(--ink); font-weight:700; }
+  .two { display:grid; grid-template-columns:1fr 1.4fr; gap:32px; } @media (max-width:720px){ .two { grid-template-columns:1fr; gap:24px; } }
+  .big { font-size:34px; font-weight:700; line-height:1.1; margin:0 0 8px; word-break:break-word; }
+  .meta { color:var(--mute); font-size:14px; margin:0; }
+  .row { display:grid; grid-template-columns:minmax(0,190px) 1fr 52px; align-items:center; gap:12px; padding:6px 0; border-bottom:1px solid var(--line); }
+  .lbl { font-size:12px; } .lbl small { color:var(--mute); display:block; font-size:11px; }
+  .track { height:8px; background:var(--soft); } .fill { height:100%; } .val { text-align:right; font-size:13px; }
+  .tl { display:flex; height:28px; border:1px solid var(--ink); } .tl div { height:100%; }
+  .legend { display:flex; flex-wrap:wrap; gap:6px 16px; margin-top:12px; font:12px ui-monospace, Consolas, monospace; }
+  .sw { display:inline-block; width:10px; height:10px; margin-right:6px; border:1px solid var(--ink); vertical-align:-1px; }
+  .previews { display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:10px; }
+  .previews img { width:100%; display:block; border:1px solid var(--line); }
+  footer { border-top:1px solid var(--line); padding-top:14px; color:var(--mute); font-size:13px; }
 </style>
 </head>
 <body>
 <main>
-  <h1>Análisis de Actividades Humanas</h1>
-  <p class="sub">MediaPipe Pose + Random Forest · Proyecto Final APO3 · Universidad ICESI</p>
+  <header>
+    <h1>Análisis de actividades humanas</h1>
+    <p class="sub">MediaPipe Pose y Random Forest · Proyecto final APO3 · Universidad ICESI</p>
+  </header>
 
-  <div class="card">
-    <h2>1. Elige un video</h2>
+  <section>
+    <h2>1. Video</h2>
     <div class="chips" id="samples"></div>
-    <p class="mute" style="margin:12px 0 8px">o sube uno propio (máx. 30 MB, se analizan los primeros ~15 s; la persona debe verse completa):</p>
+    <p class="hint">O sube uno propio: máximo 30 MB, se analizan los primeros ~15 segundos y la persona debe verse completa.</p>
     <label class="file">Subir video<input type="file" id="upload" accept="video/*"></label>
-  </div>
+  </section>
 
-  <div class="card" id="viewer" hidden>
-    <h2>Video</h2>
+  <section id="viewer" hidden>
     <video id="player" controls muted playsinline></video>
-    <p id="status" class="mute"></p>
-  </div>
+    <p id="status"></p>
+  </section>
 
   <div id="results" hidden>
-    <div class="grid">
-      <div class="card"><h2>Actividad dominante</h2><div class="big" id="dominant"></div><p class="mute" id="meta"></p></div>
-      <div class="card"><h2>Distribución</h2><div id="bars"></div></div>
-    </div>
-    <div class="card"><h2>Línea de tiempo</h2><div class="tl" id="timeline"></div><div class="legend" id="legend"></div></div>
-    <div class="card"><h2>Frames con esqueleto detectado</h2><div class="previews" id="previews"></div></div>
+    <section class="two">
+      <div>
+        <h2>Actividad dominante</h2>
+        <p class="big" id="dominant"></p>
+        <p class="meta" id="meta"></p>
+      </div>
+      <div>
+        <h2>Distribución</h2>
+        <div id="bars"></div>
+      </div>
+    </section>
+    <section>
+      <h2>Línea de tiempo</h2>
+      <div class="tl" id="timeline"></div>
+      <div class="legend" id="legend"></div>
+    </section>
+    <section>
+      <h2>Frames con esqueleto</h2>
+      <div class="previews" id="previews"></div>
+    </section>
   </div>
+
+  <footer>La confianza es la probabilidad que asigna el modelo, no una medida de acierto. Exactitud con validación entre sujetos: 52 %.</footer>
 </main>
 
 <script>
 const $ = (s) => document.querySelector(s);
-const palette = ["#4f8cff","#2fc08a","#f5a524","#e5484d","#a78bfa","#22d3ee","#f472b6","#94a3b8","#84cc16","#fb923c"];
+// Escala de grises: distinguibles entre sí y legibles en claro/oscuro; la etiqueta siempre acompaña al color.
+const shades = ["#111111","#7a7a7a","#bdbdbd","#3d3d3d","#9c9c9c","#5a5a5a","#d4d4d4","#2a2a2a","#8a8a8a","#adadad"];
 const colors = {};
-const color = (a) => colors[a] ??= palette[Object.keys(colors).length % palette.length];
+const color = (a) => colors[a] ??= shades[Object.keys(colors).length % shades.length];
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 
-function setBusy(busy, text = "") {
+function setBusy(busy, text = "", error = false) {
   document.querySelectorAll("button").forEach((b) => b.disabled = busy);
-  $("#status").textContent = text; $("#status").className = "mute";
+  $("#status").textContent = text; $("#status").className = error ? "err" : "";
 }
 
 async function run(url, options, videoSrc) {
   $("#viewer").hidden = false; $("#results").hidden = true;
   $("#player").src = videoSrc;
-  setBusy(true, "Analizando con MediaPipe… puede tardar unos segundos.");
+  setBusy(true, "Analizando, puede tardar unos segundos…");
   try {
     const r = await fetch(url, options);
     const data = await r.json();
     if (!r.ok) throw new Error(data.detail || `Error ${r.status}`);
     render(data); setBusy(false, `${data.frames_processed} frames procesados a ${data.fps} FPS.`);
   } catch (e) {
-    setBusy(false, "⚠ " + e.message); $("#status").className = "err";
+    setBusy(false, "Error: " + e.message, true);
   }
 }
 
@@ -89,18 +117,18 @@ function render(d) {
   $("#dominant").textContent = d.dominant_activity ?? "Sin detección";
   $("#meta").textContent = d.note || `${d.frames_classified} de ${d.frames_processed} frames clasificados (ventana de 32 frames).`;
   $("#bars").innerHTML = d.summary.map((s) => `
-    <div class="row"><span class="lbl" title="Confianza promedio del modelo">${esc(s.activity)} · conf. ${s.avg_confidence}%</span>
+    <div class="row"><span class="lbl">${esc(s.activity)}<small>confianza media ${s.avg_confidence}%</small></span>
       <div class="track"><div class="fill" style="width:${s.percent}%;background:${color(s.activity)}"></div></div>
       <span class="val">${s.percent}%</span></div>`).join("");
   const total = d.timeline.length || 1;
   const runs = []; d.timeline.forEach((t) => { const l = runs[runs.length-1]; l && l.a === t.activity ? l.n++ : runs.push({a:t.activity, n:1}); });
   $("#timeline").innerHTML = runs.map((r) => `<div title="${esc(r.a)}" style="width:${100*r.n/total}%;background:${color(r.a)}"></div>`).join("");
-  $("#legend").innerHTML = d.summary.map((s) => `<span><i class="dot" style="background:${color(s.activity)}"></i>${esc(s.activity)}</span>`).join("");
+  $("#legend").innerHTML = d.summary.map((s) => `<span><i class="sw" style="background:${color(s.activity)}"></i>${esc(s.activity)}</span>`).join("");
   $("#previews").innerHTML = d.previews.map((p) => `<img alt="frame ${p.frame}" src="data:image/jpeg;base64,${p.image}">`).join("");
 }
 
 fetch("/api/samples").then((r) => r.json()).then(({samples}) => {
-  $("#samples").innerHTML = samples.map((n) => `<button class="ghost" data-n="${esc(n)}">${esc(n)}</button>`).join("");
+  $("#samples").innerHTML = samples.map((n) => `<button data-n="${esc(n)}">${esc(n)}</button>`).join("");
   document.querySelectorAll("#samples button").forEach((b) => b.addEventListener("click", () =>
     run(`/api/samples/${b.dataset.n}/analyze`, {method:"POST"}, `/api/samples/${b.dataset.n}/video`)));
 });
